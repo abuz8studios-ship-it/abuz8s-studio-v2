@@ -154,6 +154,14 @@ go vet ./... ; go test ./...
 go build -tags desktop,production -trimpath -ldflags "-s -w" -o ABUZ8sStudio.exe .
 ```
 
+## Updating
+
+- Binary users: download the new `ABUZ8sStudio.exe` from
+  [Releases](https://github.com/abuz8studios-ship-it/abuz8s-studio-v2/releases)
+  and replace the old one (settings + database live in `%APPDATA%\ABUZ8sStudio`
+  and are kept).
+- Source users: `git pull && powershell -ExecutionPolicy Bypass -File scripts\build.ps1`.
+
 ## License
 
 MIT
