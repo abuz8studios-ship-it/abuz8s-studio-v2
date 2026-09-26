@@ -330,6 +330,9 @@ func (c *Config) Save() error {
 	defer c.mu.Unlock()
 	
 	configPath := getConfigPath()
+	if err := os.MkdirAll(filepath.Dir(configPath), 0755); err != nil {
+		return err
+	}
 	data, err := json.MarshalIndent(c, "", "  ")
 	if err != nil {
 		return err

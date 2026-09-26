@@ -12,6 +12,7 @@ import (
 // and database must all come up. (Regression: initAgents called .Name() on a
 // nil provider and crashed every fresh start.)
 func TestFreshStartupNoProvider(t *testing.T) {
+	t.Setenv("APPDATA", t.TempDir()) // isolate Save() from the real profile
 	dir := t.TempDir()
 
 	app := NewApp()
@@ -55,6 +56,25 @@ func TestFreshStartupNoProvider(t *testing.T) {
 	}
 	if _, err := app.GenerateContent(GenerateRequest{AgentType: string(agents.AgentXPostGenerator)}); err == nil {
 		t.Fatal("expected clean no-provider error from GenerateContent, got nil")
+	}
+
+	// The exact payload shape the SetupWizard sends must apply cleanly and
+	// switch the active provider without restart.
+	wizardPayload := map[string]interface{}{
+		"niche": map[string]interface{}{"name": "AI Tech", "description": "d", "targetAudience": "devs"},
+		"voice": map[string]interface{}{"style": "casual", "tone": "friendly"},
+		"providers": map[string]interface{}{
+			"ollama": map[string]interface{}{"enabled": true, "baseUrl": "http://localhost:11434"},
+		},
+	}
+	if err := app.UpdateConfig(wizardPayload); err != nil {
+		t.Fatalf("UpdateConfig(wizard payload) failed: %v", err)
+	}
+	if app.config.Niche.Name != "AI Tech" || !app.config.Providers.Ollama.Enabled {
+		t.Fatal("wizard payload did not apply")
+	}
+	if app.llmClient == nil || app.llmClient.Name() != "ollama" {
+		t.Fatal("active provider did not switch to ollama after update")
 	}
 
 	// Content store round-trip on the fresh database.

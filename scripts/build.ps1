@@ -7,6 +7,7 @@ $root = Split-Path -Parent $PSScriptRoot
 
 Write-Host "==> 1/4 frontend build"
 Push-Location (Join-Path $root "frontend")
+if (-not (Test-Path "node_modules")) { npm install }
 npm run build
 Pop-Location
 
