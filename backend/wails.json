@@ -1,0 +1,26 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "abuz8s-studio",
+  "outputfilename": "ABUZ8sStudio",
+  "frontend": {
+    "dir": "../frontend",
+    "install": "npm install",
+    "build": "npm run build",
+    "package": "npm run build",
+    "dev": "npm run dev"
+  },
+  "author": {
+    "name": "ABUZ8s",
+    "email": "abuz8s@example.com"
+  },
+  "info": {
+    "companyName": "ABUZ8s",
+    "productName": "ABUZ8s Studio",
+    "productVersion": "2.0.0",
+    "copyright": "Copyright © 2024 ABUZ8s",
+    "comments": "AI-Powered Content Creation Studio"
+  },
+  "debounceMS": 100,
+  "devserverurl": "http://localhost:34115",
+  "appargs": ""
+}

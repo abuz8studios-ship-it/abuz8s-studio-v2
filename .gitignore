@@ -1,0 +1,30 @@
+# Build artifacts
+*.exe
+*.dll
+backend/frontend/dist/
+frontend/dist/
+frontend/android/app/build/
+frontend/android/.gradle/
+
+# Deps
+frontend/node_modules/
+backend/vendor/
+
+# Local env / secrets
+.env
+.env.*
+*.key
+*.pem
+
+# App runtime data (lives in %APPDATA%, never in repo)
+*.db
+*.db-shm
+*.db-wal
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+.DS_Store
